@@ -60,7 +60,7 @@ class OpenAIModel(Model):
                 presence_penalty=model_conf(const.OPEN_AI).get("presence_penalty", 1.0),  # [-2,2]之间，该值越大则越不受输入限制，将鼓励模型生成输入中不存在的新词，更倾向于产生不同的内容
                 stop=["\n\n\n"]
             )
-            res_content = response.choices[0]['text'].strip().replace('<|endoftext|>', '')
+            res_content = response.choices[0].message.content.strip().replace('<|endoftext|>', '')
             log.info("[OPEN_AI] reply={}".format(res_content))
             return res_content
         except openai.error.RateLimitError as e:
